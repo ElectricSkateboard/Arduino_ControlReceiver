@@ -5,12 +5,15 @@ int BluetoothData; // the data given from Computer
 Servo ESC;
 int conPin = 7;
 
+#define DEBUG
 
 void setup() {
   // put your setup code here, to run once:
   Bluetooth.begin(115200);
+  #ifdef DEBUG
   Serial.begin(9600);
   Serial.println("Bluetooth On");
+  #endif
   ESC.attach(9);
   pinMode(conPin,INPUT);
   
@@ -22,14 +25,20 @@ void loop() {
     BluetoothData=Bluetooth.read();
     if(digitalRead(conPin) == 1)
     {
-      ESC.write(BluetoothData);
-      Serial.println(BluetoothData);
+      sendThrottle(BluetoothData);
     }
    }
    if (digitalRead(conPin) == 0)
    {
-    ESC.write(0);
-    Serial.println(0);
+      sendThrottle(0);
    }
+}
+
+void sendThrottle(int gaz)
+{
+    ESC.write(gaz);
+    #ifdef DEBUG
+    Serial.println(gaz);
+    #endif
 }
 

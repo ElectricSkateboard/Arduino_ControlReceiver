@@ -20,7 +20,6 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
    if (Bluetooth.available()){
     BluetoothData=Bluetooth.read();
     if(digitalRead(conPin) == 1)

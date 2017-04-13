@@ -1,20 +1,22 @@
-#include <SoftwareSerial.h>// import the serial library
+#include <SoftwareSerial.h>
 #include <Servo.h>
-SoftwareSerial Bluetooth(2, 3); // RX, TX
+
+SoftwareSerial Bluetooth(10, 11); // RX, TX
 int BluetoothData; // the data given from Computer
 Servo ESC;
-int conPin = 7;
+int conPin = 2;
 
-#define DEBUG
+
+//#define DEBUG
 
 void setup() {
   // put your setup code here, to run once:
   Bluetooth.begin(115200);
   #ifdef DEBUG
-  Serial.begin(9600);
+  Serial.begin(115200);
   Serial.println("Bluetooth On");
   #endif
-  ESC.attach(9);
+  ESC.attach(12);
   pinMode(conPin,INPUT);
   
 }
@@ -29,7 +31,7 @@ void loop() {
    }
    if (digitalRead(conPin) == 0)
    {
-      sendThrottle(0);
+      sendThrottle(85);
    }
 }
 
@@ -40,4 +42,3 @@ void sendThrottle(int gaz)
     Serial.println(gaz);
     #endif
 }
-
